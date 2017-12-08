@@ -27,7 +27,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       actions: path.join(process.cwd(), 'js', 'actions'),
       components: path.join(process.cwd(), 'js', 'components'),
@@ -65,35 +65,35 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
-      { test: /\.(woff2?)$/, loader: 'url?limit=10000' },
-      { test: /\.(ttf|eot)$/, loader: 'file' },
-      { test: /\.(jpe?g|png|gif|svg|ico)$/, loader: 'url?limit=10000' },
+    rules: [
+      { test: /\.(woff2?)$/, loader: 'url-loader?limit=10000' },
+      { test: /\.(ttf|eot)$/, loader: 'file-loader' },
+      { test: /\.(jpe?g|png|gif|svg|ico)$/, loader: 'url-loader?limit=10000' },
 
       // React is necessary for the client rendering
-      { test: require.resolve('react'), loader: 'expose?React' },
-      { test: require.resolve('react-dom'), loader: 'expose?ReactDOM' },
-      { test: require.resolve('jquery-ujs'), loader: 'imports?jQuery=jquery' },
-      { test: require.resolve('jquery'), loader: 'expose?jQuery' },
-      { test: require.resolve('jquery'), loader: 'expose?$' },
+      { test: require.resolve('react'), loader: 'expose-loader?React' },
+      { test: require.resolve('react-dom'), loader: 'expose-loader?ReactDOM' },
+      { test: require.resolve('jquery-ujs'), loader: 'imports-loader?jQuery=jquery' },
+      { test: require.resolve('jquery'), loader: 'expose-loader?jQuery' },
+      { test: require.resolve('jquery'), loader: 'expose-loader?$' },
 
       // Use one of these to serve jQuery for Bootstrap scripts:
 
       // Bootstrap 3
-      { test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery' },
+      { test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports-loader?jQuery=jquery' },
 
       // Bootstrap 4
-      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
+      //{ test: /bootstrap\/dist\/js\/umd\//, loader: 'imports-loader?jQuery=jquery' }
     ]
   },
 
   // Place here all postCSS plugins here, so postcss-loader will apply them
-  postcss: [autoprefixer],
+  //postcss: [autoprefixer],
 
   // Place here all SASS files with variables, mixins etc.
   // And sass-resources-loader will load them in every CSS Module (SASS file) for you
   // (so don't need to @import them explicitly)
   // https://github.com/shakacode/sass-resources-loader
-  sassResources: ['./css/app-variables.scss']
+  //sassResources: ['./css/app-variables.scss']
 
 }

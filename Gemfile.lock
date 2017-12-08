@@ -325,7 +325,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    react-rails (1.11.0)
+    react-rails (2.4.3)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -551,7 +551,7 @@ DEPENDENCIES
   rack-cache
   rack-timeout
   rails (= 5.1.4)
-  react-rails (~> 1.10)
+  react-rails (~> 2.4.3)
   rollbar
   rspec-activejob
   rspec-activemodel-mocks
@@ -560,9 +560,9 @@ DEPENDENCIES
   sass-rails
   shoulda-matchers
   sidekiq
-  spree (~> 3.4)
-  spree_auth_devise
-  spree_gateway
+  spree (~> 3.4.0)
+  spree_auth_devise (~> 3.3)
+  spree_gateway (~> 3.3)
   spring
   spring-commands-rspec
   uglifier
@@ -574,4 +574,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.1
+   1.16.0

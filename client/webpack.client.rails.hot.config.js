@@ -28,10 +28,10 @@ config.output = {
   publicPath: `http://localhost:${hotRailsPort}/`,
 }
 
-config.module.loaders.push(
+config.module.rules.push(
   {
     test: /\.jsx?$/,
-    loader: 'babel',
+    loader: 'babel-loader',
     exclude: /node_modules/,
     query: {
       plugins: [
@@ -52,27 +52,46 @@ config.module.loaders.push(
   },
   {
     test: /\.css$/,
-    loaders: [
-      'style',
-      'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]',
-      'postcss',
+    use: [
+      {loader: 'style-loader'},
+      {loader: 'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]'},
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: (loader) => [
+            require('autoprefixer')()
+          ]
+        }
+      }
     ],
   },
   {
     test: /\.scss$/,
-    loaders: [
-      'style',
-      'css?modules&sourceMap&importLoaders=3&localIdentName=[name]__[local]__[hash:base64:5]',
-      'postcss',
-      'sass?sourceMap',
-      'sass-resources',
+    use: [
+      {loader: 'style-loader'},
+      {loader: 'css-loader?modules&sourceMap&importLoaders=3&localIdentName=[name]__[local]__[hash:base64:5]'},
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: (loader) => [
+            require('autoprefixer')()
+          ]
+        }
+      },
+      {loader: 'sass-loader?sourceMap'},
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          resources: ['./css/app-variables.scss']
+        }
+      },
     ],
   }
 )
 
 config.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoEmitOnErrorsPlugin()
 )
 
 config.devtool = 'eval-source-map'

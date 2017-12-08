@@ -91,11 +91,11 @@ gem 'newrelic_rpm'
 gem 'sidekiq'
 
 # front end
-gem 'react-rails', '~> 1.10'
+gem 'react-rails', '~> 2.4.3'
 gem 'js-routes'
 gem 'i18n-js', '>= 3.0.0.rc11'
 
 # Spree gems
-gem 'spree', '~> 3.4'
-gem 'spree_gateway'
-gem 'spree_auth_devise'
+gem 'spree', '~> 3.4.0'
+gem 'spree_auth_devise', '~> 3.3'
+gem 'spree_gateway', '~> 3.3'

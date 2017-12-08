@@ -11,7 +11,7 @@ const devBuild = process.env.NODE_ENV !== 'production'
 
 config.output = {
   filename: '[name]-bundle.js',
-  path: '../app/assets/webpack',
+  path: __dirname + '/../app/assets/webpack',
 }
 
 // You can add entry points specific to rails here
@@ -26,7 +26,7 @@ config.entry.vendor.unshift(
 
 // See webpack.common.config for adding modules common to both the webpack dev server and rails
 
-config.module.loaders.push(
+/*config.module.rules.push(
   { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
   {
     test: /\.css$/,
@@ -34,7 +34,7 @@ config.module.loaders.push(
       'style',
       'css?minimize&modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]' +
       '!postcss'
-    ),
+    )
   },
   {
     test: /\.scss$/,
@@ -47,11 +47,57 @@ config.module.loaders.push(
     ),
   },
   { test: require.resolve('react'), loader: 'imports?shim=es5-shim/es5-shim&sham=es5-shim/es5-sham' }
+)*/
+
+config.module.rules.push(
+  { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+  {
+    test: /\.css$/,
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        {loader: 'css-loader?minimize&modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]'},
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: (loader) => [
+              require('autoprefixer')()
+            ]
+          }
+        }
+      ]
+    })
+  },
+  {
+    test: /\.scss$/,
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        {loader: 'css-loader?minimize&modules&importLoaders=3&localIdentName=[name]__[local]__[hash:base64:5]'},
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: (loader) => [
+              require('autoprefixer')()
+            ]
+          }
+        },
+        {loader: 'sass-loader'},
+        {
+          loader: 'sass-resources-loader',
+          options: {
+            resources: ['./css/app-variables.scss']
+          }
+        }
+      ]
+    }),
+  },
+  { test: require.resolve('react'), loader: 'imports-loader?shim=es5-shim/es5-shim&sham=es5-shim/es5-sham' }
 )
 
 config.plugins.push(
-  new ExtractTextPlugin('[name]-bundle.css', { allChunks: true }),
-  new webpack.optimize.DedupePlugin()
+  new ExtractTextPlugin('[name]-bundle.css', { allChunks: true })
+  //new webpack.optimize.DedupePlugin()
 )
 
 if (devBuild) {
